@@ -1,4 +1,4 @@
-# Instructions on how to extract the refined Atopic Dermatitis phenotype from the UK BioBank research analysis platform. 
+# Instructions on how to extract the refined Atopic Dermatitis phenotype from the UK BioBank research analysis platform (RAP) 
 
 ## 1 - Set up jupyterlab on user interface
 
@@ -78,9 +78,9 @@ print(fields)
 ```
 
 ## 5 - Extract fields into Spark dataframe and filter
-
+Remember to replace coding values when you extract fields! 
 ```
-df = participant.retrieve_fields(names=fields, engine=dxdata.connect())
+df = participant.retrieve_fields(names=fields, engine=dxdata.connect(), coding_values="replace")
 ```
 Show as Spark dataframe: `df.show(5, truncate=False)`   
 Show as Pandas dataframe: `df.limit(5).toPandas()`   
@@ -93,4 +93,42 @@ Now we filter for Atopic dermatitis cases. We will use the following filters:
 | ICD10 | 41270 | L20, L208, L209|
 | Self report | 20002| eczema/dermatitis|
 
+Create filter term for self-report (as there are 4 x 34 instances), then copy and paste into the `df.filter()` function. 
+
+```
+# Generate the list of conditions for self-report fields
+conditions = [f'(df.p20002_i{i}_a{j} = "eczema/dermatitis")' for i in range(4) for j in range(34)]
+
+# Join the conditions with ' AND ' to create the final string
+conditions_string = ' | '.join(conditions)
+
+print(conditions_string)
+```
+Then use `df.filter(<string>).count()` to count instances. To get the ICD9 and 10 cases, use:
+
+```
+icd10 = df.filter(array_contains(df.p41270,"L20 Atopic dermatitis") | array_contains(df.p41270,"L20.8 Other atopic dermatitis") | array_contains(df.p41270,"L20.9 Atopic dermatitis, unspecified"))
+
+icd9 = df.filter(array_contains(df.p41271,"691 Atopic dermatitis and related conditions") | array_contains(df.p41271,"6918 Other atopic dermatitis and related conditions") | array_contains(df.p41271,"69180 Atopic dermatitis"))
+```
+
+The numbers are given below:
+
+|Field name| Number of cases|
+|----------|----------|
+| Self report| 16045|
+| ICD10 | 281|
+|ICD9 | 23 | 
+
 ## 6 - Convert to Pandas dataframe and save as csv to UKB project
+
+```
+icd10_pd = icd10.toPandas()
+icd10_pd.head()
+icd10_pd.to_csv('icd10.csv', index=False)
+```
+Do this for all three sets of data (ICD9, ICD10, self report)
+```
+%%bash
+dx upload icd10.csv --dest /
+```
