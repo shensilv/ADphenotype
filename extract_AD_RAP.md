@@ -66,7 +66,9 @@ The entities we are interested in are: "participant" and "gp_clinical". Access t
 
 ## 4 - Load cohort and select fields
 
-We want to load each instance of self-report data, ICD9/10 and GP codes. For entity 'participant', we load self-report and ICD9/10. These codes are in the file 
+We want to load each instance of self-report data, ICD9/10 and GP codes. For entity 'participant', we load self-report and ICD9/10. These codes are in the file [icdself_fieldnames.txt](icdself_fieldnames.txt). 
+
+
 
 
 ## 5 - Extract fields into Spark dataframe and filter
