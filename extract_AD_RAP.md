@@ -10,6 +10,6 @@ We can access phenotypic data using SQL, do complex filtering and derive phenoty
 
 On the DNAnexus homepage, go to 'tools', then click 'JupyterLab'. From here, select the following options on normal priority. 
 
-**runtime:** 2 hours (plenty of time)
-**recommended instance:** mem1_ssd1_v2_x16
-**estimated cost:** ~£0.5 or ~£1.8
+**runtime:** 2 hours (plenty of time) "\t"
+**recommended instance:** mem1_ssd1_v2_x16 "\t"
+**estimated cost:** ~£0.5 or ~£1.8 "\t"
