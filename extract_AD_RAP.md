@@ -1,4 +1,4 @@
-# Here are instructions on how to extract the refined Atopic Dermatitis phenotype from the UK BioBank research analysis platform. 
+# Instructions on how to extract the refined Atopic Dermatitis phenotype from the UK BioBank research analysis platform. 
 
 ## 1 - Set up jupyterlab on user interface
 
@@ -60,7 +60,7 @@ dispensed_dataset_id
 dataset = dxdata.load_dataset(id=dispensed_dataset_id)
 ```
 
-We can see the entities in UKB by running `dataset.entities`. UK BioBank has the following entity tables, which are all linked to one another. The main entity in UKB is participant, and this corresponds to most of the phenotype fields in UKB. Other entities include linked healthcare records etc. To see the UKB entities, go to file 
+We can see the entities in UKB by running `dataset.entities`. UK BioBank has the following entity tables, which are all linked to one another. The main entity in UKB is participant, and this corresponds to most of the phenotype fields in UKB. Other entities include linked healthcare records etc. To see the UKB entities, go to [this file](UKB_entities.txt). 
 
 ## 4 - Load cohort and select fields
 
