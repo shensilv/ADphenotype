@@ -62,7 +62,12 @@ dataset = dxdata.load_dataset(id=dispensed_dataset_id)
 
 We can see the entities in UKB by running `dataset.entities`. UK BioBank has the following entity tables, which are all linked to one another. The main entity in UKB is participant, and this corresponds to most of the phenotype fields in UKB. Other entities include linked healthcare records etc. To see the UKB entities, go to [this file](UKB_entities.txt). 
 
+The entities we are interested in are: "participant" and "gp_clinical". Access these by running `participant = dataset["participant"]` and 
+
 ## 4 - Load cohort and select fields
+
+We want to load each instance of self-report data, ICD9/10 and GP codes. For entity 'participant', we load self-report and ICD9/10. These codes are in the file 
+
 
 ## 5 - Extract fields into Spark dataframe and filter
 
