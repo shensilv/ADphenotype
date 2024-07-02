@@ -68,9 +68,29 @@ The entities we are interested in are: "participant" and "gp_clinical". Access t
 
 We want to load each instance of self-report data, ICD9/10 and GP codes. For entity 'participant', we load self-report and ICD9/10. These codes are in the file [icdself_fieldnames.txt](icdself_fieldnames.txt). 
 
+```
+with open('icdself_fieldnames.txt', 'r') as file:
+    # Read all lines, strip newline characters, and store them in a list
+    fields = [line.strip() for line in file.readlines()]
 
-
+# Print the list of lines
+print(fields)
+```
 
 ## 5 - Extract fields into Spark dataframe and filter
+
+```
+df = participant.retrieve_fields(names=fields, engine=dxdata.connect())
+```
+Show as Spark dataframe: `df.show(5, truncate=False)`   
+Show as Pandas dataframe: `df.limit(5).toPandas()`   
+
+Now we filter for Atopic dermatitis cases. We will use the following filters: 
+
+| Field name | Field ID | Filters|
+|----------|----------|----------|
+| ICD9 | 41271 | 691, 6918, 69180|
+| ICD10 | 41270 | L20, L208, L209|
+| Self report | 20002| eczema/dermatitis|
 
 ## 6 - Convert to Pandas dataframe and save as csv to UKB project
