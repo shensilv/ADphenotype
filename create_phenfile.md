@@ -38,9 +38,39 @@ grep 'eczema/dermatitis' AD_icd_self.csv | awk 'BEGIN{FS=","}{print $1}' >> self
 ```
 
 ## Extract GP case eids
+```
+%%bash
+# grepping on Read2 and Read3 gives non-unique entries -- 44,749
+grep -E 'M11\.\.|M111\.|M112\.|M113\.|M114\.|M115\.|M11z\.|M12z1|Myu22|X505j|XaINM|XE1Av|XE1C6' gp_records.tsv | wc -l
+# unique eids: 26939
+grep -E 'M11\.\.|M111\.|M112\.|M113\.|M114\.|M115\.|M11z\.|M12z1|Myu22|X505j|XaINM|XE1Av|XE1C6' gp_records.tsv | awk 'BEGIN{FS="\t"}{print $1}' | sort | uniq >> gp_eids.txt
+```
 
+## Create binary phenotype file and remove exclusions
+```
+%%bash
+cat gp_eids.txt >> AD_case_eids.txt
+cat selfreport_eids.txt >> AD_case_eids.txt
+cat ICD9_eids.txt >> AD_case_eids.txt
+cat ICD10_eids.txt >> AD_case_eids.txt
+# number of individuals 40083
+cat AD_case_eids.txt | sort | uniq >> AD_cases.txt
+```
 
+```
+# IN R
+library(data.table)
+library(dplyr)
 
-## Create binary phenotype file
+full_eids <- fread("/Users/s2225464/Documents/scripts/ECZ_heritability/UKB_reml/make_phenotype/full_eids.txt", header=FALSE)
+AD_eids <- fread("/Users/s2225464/Documents/scripts/ECZ_heritability/UKB_reml/make_phenotype/AD_cases.txt", header=FALSE)
 
-## Remove removals 
+exclusions <- fread("/Users/s2225464/Documents/scripts/ECZ_heritability/UKB_reml/make_phenotype/full_excl.txt", header=TRUE)
+
+phenotype <- full_eids %>%
+  mutate(AD_status = ifelse(V1 %in% AD_eids$V1, 1, 0))
+
+phenotype <- phenotype %>%
+  filter(!(V1 %in% exclusions$eid))
+```
+We are left with 408,357 after removing exclusions due to ethnicity and QC. 
