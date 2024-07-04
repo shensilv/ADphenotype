@@ -13,5 +13,20 @@ We have three files:
 2. ICD9/10 data and self-report data
 This is in a huge file with annoying comma-separation (better to extract tab-separated). Better to filter these via grep and awk.
 
+## Extract ICD10 case eids
+
 ```
 %%bash
+# count number of ICD10 cases - 281
+grep -E 'L20|L20\.8|L20\.9' AD_icd_self.csv | wc -l
+```
+
+## Extract ICD9 case eids
+
+## Extract self-report case eids
+
+## Extract GP case eids
+
+## Create binary phenotype file
+
+## Remove removals 
