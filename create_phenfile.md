@@ -14,7 +14,6 @@ We have three files:
 This is in a huge file with annoying comma-separation (better to extract tab-separated). Better to filter these via grep and awk.
 
 ## Extract ICD10 case eids
-
 ```
 %%bash
 # count number of ICD10 cases - 281
@@ -22,20 +21,25 @@ grep -E 'L20|L20\.8|L20\.9' AD_icd_self.csv | wc -l
 grep -E 'L20|L20\.8|L20\.9' AD_icd_self.csv | awk 'BEGIN{FS=","}{print $1}' >> ICD10_eids.txt
 ```
 
-## Extract ICD9 case eids
-691
-6918
-69180
+## Extract ICD9 case eids 
 ```
 %%bash
-# count number of ICD9 cases - 281
-grep -E '691|6918|69180' AD_icd_self.csv | wc -l
-grep -E 'L20|L20\.8|L20\.9' AD_icd_self.csv | awk 'BEGIN{FS=","}{print $1}' >> ICD10_eids.txt
+# count number of ICD9 cases - 23
+grep -E '691 Atopic dermatitis and related conditions|6918 Other atopic dermatitis and related conditions|69180 Atopic dermatitis' AD_icd_self.csv | wc -l
+grep -E '691 Atopic dermatitis and related conditions|6918 Other atopic dermatitis and related conditions|69180 Atopic dermatitis' AD_icd_self.csv | awk 'BEGIN{FS=","}{print $1}' >> ICD9_eids.txt
 ```
 
 ## Extract self-report case eids
+```
+%%bash
+# count number of self-report cases - 16045
+grep 'eczema/dermatitis' AD_icd_self.csv | wc -l
+grep 'eczema/dermatitis' AD_icd_self.csv | awk 'BEGIN{FS=","}{print $1}' >> selfreport_eids.txt
+```
 
 ## Extract GP case eids
+
+
 
 ## Create binary phenotype file
 
