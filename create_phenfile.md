@@ -19,9 +19,17 @@ This is in a huge file with annoying comma-separation (better to extract tab-sep
 %%bash
 # count number of ICD10 cases - 281
 grep -E 'L20|L20\.8|L20\.9' AD_icd_self.csv | wc -l
+grep -E 'L20|L20\.8|L20\.9' AD_icd_self.csv | awk 'BEGIN{FS=","}{print $1}' >> ICD10_eids.txt
 ```
 
 ## Extract ICD9 case eids
+
+```
+%%bash
+# count number of ICD10 cases - 281
+grep -E 'L20|L20\.8|L20\.9' AD_icd_self.csv | wc -l
+grep -E 'L20|L20\.8|L20\.9' AD_icd_self.csv | awk 'BEGIN{FS=","}{print $1}' >> ICD10_eids.txt
+```
 
 ## Extract self-report case eids
 
