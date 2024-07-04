@@ -23,11 +23,13 @@ grep -E 'L20|L20\.8|L20\.9' AD_icd_self.csv | awk 'BEGIN{FS=","}{print $1}' >> I
 ```
 
 ## Extract ICD9 case eids
-
+691
+6918
+69180
 ```
 %%bash
-# count number of ICD10 cases - 281
-grep -E 'L20|L20\.8|L20\.9' AD_icd_self.csv | wc -l
+# count number of ICD9 cases - 281
+grep -E '691|6918|69180' AD_icd_self.csv | wc -l
 grep -E 'L20|L20\.8|L20\.9' AD_icd_self.csv | awk 'BEGIN{FS=","}{print $1}' >> ICD10_eids.txt
 ```
 
