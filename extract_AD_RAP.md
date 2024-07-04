@@ -132,3 +132,7 @@ Do this for all three sets of data (ICD9, ICD10, self report)
 %%bash
 dx upload icd10.csv --dest /
 ```
+
+# Extract GP data
+
+Use the same method as above, but instead of 'participant' entity, use the GP records entity. Download read2 and read3 codes. 
