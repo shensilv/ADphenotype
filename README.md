@@ -1,4 +1,4 @@
-# ADphenotype
+# AD phenotype
 Code for Chapter 2 of my PhD thesis: "Refining the Atopic Dermatitis phenotype"
 
 For more info on UKB RAP see: https://github.com/UK-Biobank/UKB-RAP-Notebooks/tree/main  
