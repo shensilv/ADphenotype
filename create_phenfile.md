@@ -72,5 +72,9 @@ phenotype <- full_eids %>%
 
 phenotype <- phenotype %>%
   filter(!(V1 %in% exclusions$eid))
+
+colnames(phenotype) <- c("eid", "sex", "AD_status")
+
+write.table(phenotype, "/Users/s2225464/Documents/ECZ_heritability/UKB_reml/make_phenotype/ad_phen_sex.tsv", sep = "\t", row.names = FALSE, col.names = TRUE, quote=FALSE)
 ```
-We are left with 408,357 after removing exclusions due to ethnicity and QC. 
+The file `ad_phen_sex.tsv' is the final AD phenotype with exclusions removed for all individuals in UKB. 
