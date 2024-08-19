@@ -97,16 +97,18 @@ Create filter term for self-report (as there are 4 x 34 instances), then copy an
 
 ```
 # Generate the list of conditions for self-report fields
-conditions = [f'(df.p20002_i{i}_a{j} = "eczema/dermatitis")' for i in range(4) for j in range(34)]
+conditions = [f'(df.p20002_i{i}_a{j} == "eczema/dermatitis")' for i in range(4) for j in range(34)]
 
 # Join the conditions with ' AND ' to create the final string
 conditions_string = ' | '.join(conditions)
 
 print(conditions_string)
 ```
+
 Then use `df.filter(<string>).count()` to count instances. To get the ICD9 and 10 cases, use:
 
 ```
+from pyspark.sql.functions import array_contains
 icd10 = df.filter(array_contains(df.p41270,"L20 Atopic dermatitis") | array_contains(df.p41270,"L20.8 Other atopic dermatitis") | array_contains(df.p41270,"L20.9 Atopic dermatitis, unspecified"))
 
 icd9 = df.filter(array_contains(df.p41271,"691 Atopic dermatitis and related conditions") | array_contains(df.p41271,"6918 Other atopic dermatitis and related conditions") | array_contains(df.p41271,"69180 Atopic dermatitis"))
@@ -116,7 +118,7 @@ The numbers are given below:
 
 |Field name| Number of cases|
 |----------|----------|
-| Self report| 16045|
+| Self report| 16044|
 | ICD10 | 281|
 |ICD9 | 23 | 
 
